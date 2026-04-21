@@ -7,10 +7,10 @@ WORKDIR /app
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 # Copy dependency manifests first (layer cache)
-COPY pyproject.toml .
+COPY pyproject.toml uv.lock ./
 
 # Install runtime deps only into /app/.venv
-RUN uv sync --no-dev --no-install-project
+RUN uv sync --frozen --no-dev --no-install-project
 
 # --- runtime stage ---
 FROM python:3.12-slim AS runtime

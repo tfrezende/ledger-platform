@@ -5,11 +5,20 @@ from sqlalchemy import text
 router = APIRouter(prefix="/health", tags=["Health"])
 
 
-@router.get("/live", summary="Liveliness Check", description="Check if the service is alive and responsive.")
+@router.get(
+    "/live",
+    summary="Liveliness Check",
+    description="Check if the service is alive and responsive.",
+)
 async def health_check() -> JSONResponse:
     return JSONResponse(content={"status": "ok"})
 
-@router.get("/ready", summary="Readiness Check", description="Check if the service is ready to handle requests.")
+
+@router.get(
+    "/ready",
+    summary="Readiness Check",
+    description="Check if the service is ready to handle requests.",
+)
 async def readiness_check(request: Request) -> JSONResponse:
     checks: dict[str, str] = {}
     ok = True
@@ -19,7 +28,7 @@ async def readiness_check(request: Request) -> JSONResponse:
         async with request.app.state.db_engine.connect() as conn:
             await conn.execute(text("SELECT 1"))
         checks["database"] = "ok"
-    except Exception: # noqa: BLE001
+    except Exception:  # noqa: BLE001
         checks["database"] = "unavailable"
         ok = False
 
@@ -27,7 +36,7 @@ async def readiness_check(request: Request) -> JSONResponse:
     try:
         await request.app.state.redis.ping()
         checks["redis"] = "ok"
-    except Exception: # noqa: BLE001
+    except Exception:  # noqa: BLE001
         checks["redis"] = "unavailable"
         ok = False
 

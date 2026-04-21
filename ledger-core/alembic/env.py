@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from src.config.settings import get_settings
+from config.settings import get_settings  # type: ignore[import]
 
 # Alembic Config object — provides access to alembic.ini values
 config = context.config

@@ -1,5 +1,6 @@
 {
   "pythonPath": ".venv/bin/python",
+  "extraPaths": ["src"],
   "executionEnvironments": [
     {
       "root": "src"

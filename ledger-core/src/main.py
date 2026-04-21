@@ -8,9 +8,8 @@ from sqlalchemy.ext.asyncio import create_async_engine
 
 from api.v1.health import router as health_router
 from config.settings import get_settings
-
-from infrastructure.db.session import create_db_engine
 from infrastructure.cache.redis_client import create_redis_client
+from infrastructure.db.session import create_session_factory
 
 
 def configure_logging() -> None:
@@ -62,8 +61,9 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         echo=False,
     )
 
-    app.state.db_engine = create_db_engine(engine)
-    app.state.redis = await create_redis_client(str(settings.redis_url))
+    app.state.db_engine = engine
+    app.state.session_factory = create_session_factory(engine)
+    app.state.redis = create_redis_client(str(settings.redis_url))
 
     yield
 

@@ -1,0 +1,3 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/projects/ledger-platform/ledger-core/.venv/bin/python"
+}

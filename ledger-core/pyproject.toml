@@ -1,0 +1,47 @@
+[project]
+name = "ledger-core"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "sqlalchemy[asyncio]>=2.0",
+    "asyncpg",
+    "alembic",
+    "redis>=5",
+    "pydantic-settings",
+    "structlog",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "anyio[trio]",
+    "httpx",
+    "testcontainers[postgres,redis]",
+    "ruff",
+    "mypy",
+    "sqlalchemy[mypy]",
+    "types-redis",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+select = ["E", "F", "I", "UP", "B", "S"]
+
+[tool.mypy]
+strict = true
+plugins = ["sqlalchemy.ext.mypy.plugin"]
+exclude = ["alembic/"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["src"]
+markers = [
+    "unit: no I/O, ports mocked",
+    "integration: testcontainers, real Postgres + Redis",
+    "e2e: full ASGI stack with real containers",
+]

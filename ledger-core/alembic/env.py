@@ -10,6 +10,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from config.settings import get_settings  # type: ignore[import]
+from infrastructure.db.models import Base  # type: ignore[import]
 
 # Alembic Config object — provides access to alembic.ini values
 config = context.config
@@ -22,8 +23,8 @@ if config.config_file_name is not None:
 settings = get_settings()
 config.set_main_option("sqlalchemy.url", str(settings.database_url))
 
-# ORM metadata for autogenerate — swap None for Base.metadata in Feature 1
-target_metadata = None
+# ORM metadata for autogenerate 
+target_metadata = Base.metadata
 
 
 def do_run_migrations(connection):

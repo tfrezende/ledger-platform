@@ -7,6 +7,8 @@ from fastapi import FastAPI
 from sqlalchemy.ext.asyncio import create_async_engine
 
 from api.v1.health import router as health_router
+from api.v1.owners import router as owners_router
+from api.v1.accounts import router as accounts_router
 from config.settings import get_settings
 from infrastructure.cache.redis_client import create_redis_client
 from infrastructure.db.session import create_session_factory
@@ -74,6 +76,8 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 def create_app() -> FastAPI:
     app = FastAPI(title="ledger-core", version="0.1.0", lifespan=lifespan)
     app.include_router(health_router)
+    app.include_router(owners_router)
+    app.include_router(accounts_router)
     return app
 
 

@@ -17,8 +17,10 @@ dependencies = [
 dev = [
     "pytest",
     "pytest-asyncio",
+    "pytest-cov",
     "anyio[trio]",
     "httpx",
+    "asgi-lifespan",
     "testcontainers[postgres,redis]",
     "ruff",
     "mypy",
@@ -38,6 +40,9 @@ exclude = ["alembic/"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+addopts = "--cov=src --cov-report=term-missing"
 testpaths = ["tests"]
 pythonpath = ["src"]
 markers = [
@@ -45,3 +50,12 @@ markers = [
     "integration: testcontainers, real Postgres + Redis",
     "e2e: full ASGI stack with real containers",
 ]
+
+[tool.coverage.run]
+source = ["src"]
+branch = true
+omit = ["*/alembic/*"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80

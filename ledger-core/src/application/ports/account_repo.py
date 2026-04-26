@@ -7,7 +7,7 @@ from domain.account import Account
 
 
 class AccountRepo(Protocol):
-    async def get_by_id(self, account_id: uuid.UUID) -> Account:
+    async def get(self, account_id: uuid.UUID) -> Account:
         ...
     async def save(self, account: Account) -> None:
         ...

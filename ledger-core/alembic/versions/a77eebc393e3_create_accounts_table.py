@@ -27,7 +27,7 @@ def upgrade() -> None:
     sa.Column('currency', sa.String(length=3), nullable=False),
     sa.Column('status', sa.String(length=20), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), nullable=False),
-    sa.Column('metadata', sa.JSON(), server_default='{}', nullable=False),
+    sa.Column('metadata', sa.JSON(), server_default=sa.text("'{}'"), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_accounts_owner_id'), 'accounts', ['owner_id'], unique=False)

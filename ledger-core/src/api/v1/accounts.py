@@ -4,19 +4,18 @@ import uuid
 from datetime import datetime
 
 from fastapi import APIRouter, Depends, status
-from pydantic import BaseModel, ConfigDict, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from api.dependencies import get_account_repo
 from application.ports.account_repo import AccountRepo
 from application.use_cases.create_account import CreateAccountCommand, create_account
 from application.use_cases.get_account import get_account
-from application.use_cases.list_accounts_by_owner import list_accounts_by_owner
 
 
 class CreateAccountRequest(BaseModel):
     owner_id: uuid.UUID
     currency: str
-    metadata: dict[str, str] = {}
+    metadata: dict[str, str] = Field(default_factory=dict)
 
     @field_validator("currency")
     @classmethod

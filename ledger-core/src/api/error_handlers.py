@@ -11,7 +11,7 @@ from domain.exceptions import (
 )
 
 
-def _error_response(status_code: int, error: str, detail:str) -> JSONResponse:
+def _error_response(status_code: int, error: str, detail: str) -> JSONResponse:
     return JSONResponse(
         status_code=status_code,
         content={"error": error, "detail": detail},

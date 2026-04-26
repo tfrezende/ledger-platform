@@ -15,7 +15,7 @@ class AccountStatus(StrEnum):
 @dataclass(frozen=True)
 class Account:
     id: uuid.UUID
-    owwner_id: uuid.UUID
+    owner_id: uuid.UUID
     currency: str
     status: AccountStatus
     created_at: datetime

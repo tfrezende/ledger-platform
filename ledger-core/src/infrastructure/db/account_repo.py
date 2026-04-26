@@ -45,6 +45,7 @@ class SqlAccountRepo:
     async def save(self, account: Account) -> None:
         model = _to_model(account)
         await self._session.merge(model)
+        await self._session.flush()
 
     async def list_by_owner(self, owner_id: uuid.UUID) -> list[Account]:
         result = await self._session.execute(

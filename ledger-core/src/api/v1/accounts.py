@@ -8,9 +8,9 @@ from pydantic import BaseModel, ConfigDict, field_validator
 
 from api.dependencies import get_account_repo
 from application.ports.account_repo import AccountRepo
-from application.use_cases.list_accounts_by_owner import list_accounts_by_owner
+from application.use_cases.create_account import CreateAccountCommand, create_account
 from application.use_cases.get_account import get_account
-from application.use_cases.create_account import create_account
+from application.use_cases.list_accounts_by_owner import list_accounts_by_owner
 
 
 class CreateAccountRequest(BaseModel):
@@ -53,9 +53,11 @@ async def create_account_route(
 ) -> AccountResponse:
     account = await create_account(
         repo=repo,
-        owner_id=body.owner_id,
-        currency=body.currency,
-        metadata=body.metadata,
+        cmd=CreateAccountCommand(
+            owner_id=body.owner_id,
+            currency=body.currency,
+            metadata=body.metadata,
+        ),
     )
     return AccountResponse.model_validate(account)
 

@@ -10,7 +10,7 @@ from infrastructure.db.account_repo import SqlAccountRepo
 
 
 async def get_session(request: Request) -> AsyncGenerator[AsyncSession, None]:
-    async with request.app.state.db_session_factory() as session:
+    async with request.app.state.session_factory() as session:
         async with session.begin():
             yield session
 

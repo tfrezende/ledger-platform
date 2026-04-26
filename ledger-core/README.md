@@ -75,6 +75,18 @@ uv run pytest -m integration      # requires running Postgres + Redis
 uv run pytest -m e2e              # full stack
 ```
 
+## API
+
+### Accounts
+
+| Method | Endpoint                         | Description                    |
+| ------ | -------------------------------- | ------------------------------ |
+| `POST` | `/v1/accounts/`                  | Create a new account           |
+| `GET`  | `/v1/accounts/{account_id}`      | Get account by ID              |
+| `GET`  | `/v1/owners/{owner_id}/accounts` | List all accounts for an owner |
+
+Accounts have a `status` of `active`, `frozen`, or `closed`. Operations that mutate a non-active account return `422`.
+
 ## Health
 
 | Endpoint            | Description                                  |
@@ -84,6 +96,11 @@ uv run pytest -m e2e              # full stack
 
 ## Project status
 
-The service is in early development. The project scaffold is in place — configuration, logging, health endpoints, Docker setup, Alembic, and CI.
-
-Account management, ledger entries, balance queries, and observability are planned and will be implemented incrementally.
+| Feature                                    | Status      |
+| ------------------------------------------ | ----------- |
+| Feature 0 — Scaffold                       | ✅ Complete |
+| Feature 1 — Account Management             | ✅ Complete |
+| Feature 2 — Ledger Entries                 | 🔜 Planned  |
+| Feature 3 — Balance Query                  | ⏳ Planned  |
+| Feature 4 — Error Handling & Observability | ⏳ Planned  |
+| Feature 5 — Test Pyramid & CI Hardening    | ⏳ Planned  |

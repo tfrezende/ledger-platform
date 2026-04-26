@@ -6,6 +6,7 @@ import structlog
 from fastapi import FastAPI
 from sqlalchemy.ext.asyncio import create_async_engine
 
+from api.error_handlers import register_error_handlers
 from api.v1.health import router as health_router
 from api.v1.owners import router as owners_router
 from api.v1.accounts import router as accounts_router
@@ -78,6 +79,7 @@ def create_app() -> FastAPI:
     app.include_router(health_router)
     app.include_router(owners_router)
     app.include_router(accounts_router)
+    register_error_handlers(app)
     return app
 
 

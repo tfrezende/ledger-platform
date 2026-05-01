@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from domain.account import Account, AccountStatus
 from domain.exceptions import AccountClosedError, AccountFrozenError
 
